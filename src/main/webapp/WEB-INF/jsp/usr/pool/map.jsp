@@ -41,7 +41,7 @@
 </section>
 
 <script>
-    var IMG_PATH = '/resource/32-icon.png'; // 마커 아이콘 경로
+    var IMG_PATH = '/resource/32-pool-icon.png'; // 마커 아이콘 경로
     var defaultImageUrl = "https://via.placeholder.com/100";  // 기본 이미지 URL
 
     // 네이버 지도 생성
