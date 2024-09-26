@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	<!-- 좌측 실내 수영 패널 -->
 	<!-- 좌측 패널 호버 영역 -->
 	<div class="hover-area-left"></div> <!-- 호버 트리거 영역 -->
-	<div class="side-panel left-panel absolute top-0 left-0 w-1/3 h-screen bg-white flex flex-col items-start space-y-4 py-8 pl-6 shadow-lg border-r border-gray-200">
+	<div class="side-panel left-panel absolute top-0 left-0 w-1/6 h-screen bg-white flex flex-col items-start space-y-4 py-8 pl-6 shadow-lg border-r border-gray-200">
 		<!-- 1차 메뉴 -->
 		<div class="menu-item text-xl font-semibold text-gray-800 hover:text-blue-500">실내 수영</div>
 		<!-- 2차 메뉴 -->

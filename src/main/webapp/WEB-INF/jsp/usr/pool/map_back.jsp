@@ -4,6 +4,8 @@
 <c:set var="pageTitle" value="POOL MAP"></c:set>
 <%@ include file="../common/head_Option.jspf"%>
 
+<%@ include file="../common/sidebar.jspf"%>
+
 <!-- 네이버 지도 API -->
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ecu9lnpu4v"></script>
 
