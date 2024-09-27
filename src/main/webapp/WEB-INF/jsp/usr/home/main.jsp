@@ -51,29 +51,6 @@ body {
 }
 
 /* 좌측 패널 */
-/* .side-panel.left-panel { */
-/* 	transform: translateX(-90%); /* 초기 위치를 화면 밖으로 설정, 90%가 숨겨짐 */ */
-/* 	transition: transform 0.5s ease; /* 패널이 부드럽게 이동하도록 설정 */ */
-/* } */
-
-/* 호버 시 패널이 나타나도록 설정 */
-/* .hover-area-left:hover ~ .side-panel.left-panel, */
-/* .side-panel.left-panel:hover { */
-/* 	transform: translateX(0); /* 호버 시 패널이 완전히 나타남 */ */
-/* } */
-
-/* 좌측 패널 호버 트리거 */
-.hover-area-left {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 20px; /* 호버 트리거 넓이 */
-	height: 100vh;
-	z-index: 50;
-	cursor: pointer;
-}
-
-/* 좌측 패널 */
 .side-panel.left-panel {
 	transform: translateX(-95%); /* 초기 위치를 화면 밖으로 설정, 95%가 숨겨짐 */
 	transition: transform 0.5s ease; /* 패널이 부드럽게 이동하도록 설정 */
@@ -153,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	<div id="background"></div>
 
 	<!-- 상단 우측 로그인/회원가입/마이페이지 -->
-	<header class="w-full flex justify-center py-4 bg-white shadow-lg">
+	<header class="w-full flex justify-center py-4 ">
 		<ul class="flex space-x-4 text-2xl">
 			<c:if test="${!rq.isLogined() }">
 				<li>
