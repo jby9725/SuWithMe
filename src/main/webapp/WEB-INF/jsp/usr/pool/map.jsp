@@ -8,6 +8,8 @@
 
 <!-- 네이버 지도 API -->
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ecu9lnpu4v"></script>
+<!-- 네이버 마커클러스터링 API -->
+<script type="text/javascript" src="/js/MarkerClustering.js"></script>
 
 <!-- 네이버 검색 API 키 설정 -->
 <script>
@@ -24,13 +26,16 @@
 		<span class="close absolute top-3 right-3 text-gray-500 text-xl cursor-pointer">&times;</span>
 		<h2 id="modalPoolName" class="text-2xl font-bold mb-4"></h2>
 		<p>
-			<strong>전화번호:</strong> <span id="modalCallNumber"></span>
+			<strong>전화번호:</strong>
+			<span id="modalCallNumber"></span>
 		</p>
 		<p>
-			<strong>지번 주소:</strong> <span id="modalPostalCodeStreet"></span>
+			<strong>지번 주소:</strong>
+			<span id="modalPostalCodeStreet"></span>
 		</p>
 		<p>
-			<strong>도로명 주소:</strong> <span id="modalAddressLocation"></span>
+			<strong>도로명 주소:</strong>
+			<span id="modalAddressLocation"></span>
 		</p>
 		<div id="modalImages" style="display: flex; justify-content: space-around;"></div>
 		<!-- 이미지들을 가로로 나란히 배치 -->
@@ -142,6 +147,7 @@
         });
     }
 
+    var markers = [];
     // 마커 생성 및 클릭 이벤트 등록
     pools.forEach(function(pool) {
         var marker = new naver.maps.Marker({
@@ -155,10 +161,52 @@
             }
         });
 
+        markers.push(marker);
+        
         // 마커 클릭 시 InfoWindow 대신 모달에 수영장 정보 및 이미지 표시
         naver.maps.Event.addListener(marker, 'click', function(e) {
             searchImagesAndBlogs(pool);
         });
+    });
+    
+    var htmlMarker1 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/img/cluster-marker-1.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        },
+        htmlMarker2 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/img/cluster-marker-2.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        },
+        htmlMarker3 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/img/cluster-marker-3.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        },
+        htmlMarker4 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/img/cluster-marker-4.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        },
+        htmlMarker5 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/img/cluster-marker-5.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        };
+    
+    var markerClustering = new MarkerClustering({
+        minClusterSize: 2,
+        maxZoom: 13,
+        map: map,
+        markers: markers,
+        disableClickZoom: false,
+        gridSize: 120,
+        icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
+        indexGenerator: [10, 100, 200, 500, 1000],
+        stylingFunction: function(clusterMarker, count) {
+            $(clusterMarker.getElement()).find('div:first-child').text(count);
+        }
     });
     
 	// 수영장 이름으로 검색 후 지도 이동 및 마커 표시
