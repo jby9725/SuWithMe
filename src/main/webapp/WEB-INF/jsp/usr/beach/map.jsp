@@ -122,10 +122,13 @@
                 <p>기온: \${weatherInfo.temperature}</p>
                 <p>강수 형태: \${weatherInfo.precipitationType}</p>
                 <p>강수 확률: \${weatherInfo.precipitationProbability}</p>
+                <p>하늘 상태: \${weatherInfo.skyCondition}</p>
+                <p>풍향: \${weatherInfo.windDirection}</p>
+                <p>풍속: \${weatherInfo.windSpeed}</p>
+                <p>파고: \${weatherInfo.waveHeight}</p>
                 <hr>
             `;
         }
-
         popupContent += `<button onclick="closeModal()">닫기</button></div>`;
         const popup = document.getElementById('weatherPopup');
         if (popup) {

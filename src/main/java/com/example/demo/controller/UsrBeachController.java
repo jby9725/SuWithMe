@@ -109,6 +109,9 @@ public class UsrBeachController {
 			rd.close();
 			conn.disconnect();
 
+			// JSON 응답 출력 (테스트용)
+	        System.out.println("Weather API Response: " + result.toString());
+			
 			JSONObject jsonResponse = new JSONObject(result.toString());
 			JSONObject responseObject = jsonResponse.getJSONObject("response");
 			JSONObject header = responseObject.getJSONObject("header");
@@ -138,18 +141,44 @@ public class UsrBeachController {
 				}
 
 				switch (category) {
+				// 1시간 기온
 				case "TMP":
 					weather.setTemperature(value + "℃");
 					break;
+				// 강수형태
 				case "PTY":
 					weather.setPrecipitationType(getRainType(value));
 					break;
+				// 강수 확률
 				case "POP":
 					weather.setPrecipitationProbability(value + "%");
 					break;
+				// 일 최저 기온
+				case "TMN":
+					weather.setMinTemperature(value + "℃");
+					break;
+				// 일 최고 기온
+				case "TMX":
+					weather.setMaxTemperature(value + "℃");
+					break;
+				// 하늘 상태 
+				case "SKY":
+					weather.setSkyCondition(value);
+					break;
+				// 풍향
+				case "VEC":
+					weather.setWindDirection(value+ " deg");
+					break;
+				// 풍속
+				case "WSD":
+					weather.setWindSpeed(value + "m/s");
+					break;
+				// 파고
+				case "WAV":
+					weather.setWaveHeight(value + "m");
+					break;
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
