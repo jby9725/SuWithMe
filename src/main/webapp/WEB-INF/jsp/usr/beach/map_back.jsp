@@ -105,7 +105,7 @@
         });
     }
 
- // 날씨 정보를 팝업에 표시하는 함수
+    // 날씨 정보를 팝업에 표시하는 함수
     function showWeatherPopup(beachName, weatherDataMap) {
         console.log("받아온 데이터 확인: ", weatherDataMap);
 
@@ -117,60 +117,19 @@
 
         for (const baseTime in weatherDataMap) {
             const weatherInfo = weatherDataMap[baseTime];
-            let skyImage = '';
-            let precipitationImage = '';
-
-            // 하늘 상태에 따라 이미지를 선택합니다.
-            switch (weatherInfo.skyCondition) {
-                case '1':
-                    skyImage = '/images/clear.png'; // 맑음
-                    break;
-                case '3':
-                    skyImage = '/images/cloudy.png'; // 구름 많음
-                    break;
-                case '4':
-                    skyImage = '/images/overcast.png'; // 흐림
-                    break;
-                default:
-                    skyImage = '/images/unknown.png'; // 알 수 없음
-                    break;
-            }
-
-            // 강수 형태에 따라 이미지를 선택합니다.
-            switch (weatherInfo.precipitationType) {
-                case '0':
-                    precipitationImage = '/images/no_rain.png'; // 없음
-                    break;
-                case '1':
-                    precipitationImage = '/images/rain.png'; // 비
-                    break;
-                case '2':
-                    precipitationImage = '/images/rain_snow.png'; // 비/눈
-                    break;
-                case '3':
-                    precipitationImage = '/images/snow.png'; // 눈
-                    break;
-                case '4':
-                    precipitationImage = '/images/shower.png'; // 소나기
-                    break;
-                default:
-                    precipitationImage = '/images/unknown.png'; // 알 수 없음
-                    break;
-            }
-
             popupContent += `
                 <h5>기준 시간: \${weatherInfo.baseTime}</h5>
-                <p>하늘 상태: <img src="\${skyImage}" alt="하늘 상태" style="width: 50px; height: 50px;"></p>
-                <p>강수 형태: <img src="\${precipitationImage}" alt="강수 형태" style="width: 50px; height: 50px;"></p>
                 <p>기온: \${weatherInfo.temperature}</p>
                 <p>강수 형태: \${weatherInfo.precipitationType}</p>
                 <p>강수 확률: \${weatherInfo.precipitationProbability}</p>
+                <p>하늘 상태: \${weatherInfo.skyCondition}</p>
                 <p>풍향: \${weatherInfo.windDirection}</p>
                 <p>풍속: \${weatherInfo.windSpeed}</p>
                 <p>파고: \${weatherInfo.waveHeight}</p>
                 <hr>
             `;
         }
+        
         popupContent += `<button onclick="closeModal()">닫기</button></div>`;
         const popup = document.getElementById('weatherPopup');
         if (popup) {
