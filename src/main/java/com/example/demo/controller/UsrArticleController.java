@@ -45,9 +45,12 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/write")
 	public String writeArticle(Model model) {
 
-		int currentId = articleService.getCurrentArticleId();
+		Integer currentId = articleService.getCurrentArticleId();
+		
+		// 또는 기본값 설정
+		int articleId = (currentId != null) ? currentId : 1;
 
-		model.addAttribute("currentId", currentId);
+		model.addAttribute("currentId", articleId);
 
 		return "/usr/article/write";
 	}

@@ -159,7 +159,7 @@ public class ArticleService {
 		return articleRepository.getBadRP(relId);
 	}
 
-	public int getCurrentArticleId() {
+	public Integer getCurrentArticleId() {
 		return articleRepository.getCurrentArticleId();
 
 	}
