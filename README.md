@@ -6,8 +6,8 @@ Java, Spring Boot, JSP, Mysql
 OpenCSV 라이브러리, proj4j 라이브러리, fullcalender 라이브러리, 네이버 이미지 검색 API, 네이버 지도 API, 공공데이터 기상청 날씨 조회 API, JSON 라이브러리
 
 ### 프로젝트 구조
-Back : Controller, Service, Repository
-Front : JSP
+Back : Controller, Service, Repository <br>
+Front : JSP <br>
 크게 기능적으로 회원 / 수영장 지도 / 수영 일정 관리 / 해수욕장 지도와 날씨 로 나눌 수 있다.
 
 회원
