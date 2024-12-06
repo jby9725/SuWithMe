@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -176,5 +177,16 @@ public interface MemberRepository {
 			</script>
 			""")
 	void deleteMember(int id);
+
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE loginId = #{loginId}
+			AND email = #{email}
+			""")
+	public Member getMemberByLoginIdAndEmail(String loginId, String email);
+
+	@Update("UPDATE member SET loginPw = #{encodedPassword}, updateDate = NOW() WHERE id = #{memberId}")
+	void updatePassword(@Param("memberId") int memberId, @Param("encodedPassword") String encodedPassword);
 
 }

@@ -16,3 +16,6 @@ spring:
     password: 
 mybatis:
   type-aliases-package: com.example.demo.vo
+custom:
+  siteName: SuWithMe
+  siteMainUri: http://localhost:8080
