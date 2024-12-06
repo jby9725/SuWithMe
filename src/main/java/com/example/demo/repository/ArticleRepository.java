@@ -199,5 +199,5 @@ public interface ArticleRepository {
 			SELECT MAX(id) + 1
 			FROM article
 			""")
-	public int getCurrentArticleId();
+	public Integer getCurrentArticleId();
 }
