@@ -38,7 +38,7 @@
 
 <!-- 검색 바 -->
 <div class="search-bar flex justify-center mt-4">
-	<input id="searchInput" type="text" placeholder="수영장 이름을 입력하세요" class="border p-2 rounded w-1/2">
+	<input id="searchInput" type="text" placeholder="수영장 이름을 입력하세요." class="border p-2 rounded w-1/2">
 	<button onclick="searchPool()" class="bg-blue-500 text-white p-2 ml-2 rounded">검색</button>
 </div>
 

@@ -17,7 +17,7 @@
 			return;
 		}
 		if (form.loginId.value != validLoginId) {
-			alert('사용할 수 없는 아이디야');
+			alert('사용할 수 없는 아이디입니다.');
 			form.loginId.focus();
 			return;
 		}
@@ -99,7 +99,7 @@
 							<td style="text-align: center;">
 								<input onkeyup="checkLoginIdDupDebounced(this);"
 									class="input input-bordered input-primary input-sm w-full max-w-xs" name="loginId" autocomplete="off"
-									type="text" placeholder="아이디를 입력해" />
+									type="text" placeholder="아이디를 입력해주세요." />
 							</td>
 
 						</tr>
@@ -114,35 +114,35 @@
 							<th>비밀번호</th>
 							<td style="text-align: center;">
 								<input class="input input-bordered input-primary input-sm w-full max-w-xs" name="loginPw" autocomplete="off"
-									type="text" placeholder="비밀번호를 입력해" />
+									type="text" placeholder="비밀번호를 입력해주세요." />
 							</td>
 						</tr>
 						<tr>
 							<th>이름</th>
 							<td style="text-align: center;">
 								<input class="input input-bordered input-primary input-sm w-full max-w-xs" name="name" autocomplete="off"
-									type="text" placeholder="이름 입력해" />
+									type="text" placeholder="이름을 입력해주세요." />
 							</td>
 						</tr>
 						<tr>
 							<th>닉네임</th>
 							<td style="text-align: center;">
 								<input class="input input-bordered input-primary input-sm w-full max-w-xs" name="nickname" autocomplete="off"
-									type="text" placeholder="닉네임 입력해" />
+									type="text" placeholder="닉네임을 입력해주세요." />
 							</td>
 						</tr>
 						<tr>
 							<th>전화번호</th>
 							<td style="text-align: center;">
 								<input class="input input-bordered input-primary input-sm w-full max-w-xs" name="cellphoneNum"
-									autocomplete="off" type="text" placeholder="전화번호를 입력해" />
+									autocomplete="off" type="text" placeholder="전화번호를 입력해주세요." />
 							</td>
 						</tr>
 						<tr>
 							<th>이메일</th>
 							<td style="text-align: center;">
 								<input class="input input-bordered input-primary input-sm w-full max-w-xs" name="email" autocomplete="off"
-									type="text" placeholder="이메일을 입력해" />
+									type="text" placeholder="이메일을 입력해주세요." />
 							</td>
 						</tr>
 						<tr>

@@ -11,7 +11,7 @@
 		form.title.value = form.title.value.trim();
 
 		if (form.title.value.length == 0) {
-			alert('제목 써');
+			alert('제목을 입력해주세요.');
 			return;
 		}
 
@@ -20,7 +20,7 @@
 		const markdown = editor.getMarkdown().trim();
 
 		if (markdown.length == 0) {
-			alert('내용 써');
+			alert('내용을 입력해주세요.');
 			return;
 		}
 
@@ -66,7 +66,7 @@
 							<th>제목</th>
 							<td style="text-align: center;">
 								<input class="input input-bordered input-primary input-sm w-full max-w-xs" name="title" autocomplete="off"
-									type="text" placeholder="제목을 입력해" />
+									type="text" placeholder="제목을 입력해주세요." />
 							</td>
 
 						</tr>

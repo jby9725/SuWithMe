@@ -10,12 +10,12 @@
 		form.name.value = form.name.value.trim();
 		form.email.value = form.email.value.trim();
 		if (form.name.value.length == 0) {
-			alert('이름 써라');
+			alert('이름을 입력해주세요.');
 			form.name.focus();
 			return;
 		}
 		if (form.email.value.length == 0) {
-			alert('email 써라');
+			alert('email을 입력해주세요.');
 			form.email.focus();
 			return;
 		}
@@ -30,7 +30,7 @@
 <section class="con flex-grow flex-col justify-center items-center m-16 bg-white rounded-lg">
 
 
-	<section class="mt-24 text-xl px-4"">
+	<section class="mt-24 text-xl px-4">
 		<div class="mx-auto">
 			<form action="../member/doFindLoginId" method="POST" onsubmit="MemberFindLoginId__submit(this);">
 				<input type="hidden" name="afterFindLoginIdUri" value="${param.afterFindLoginIdUri }" />

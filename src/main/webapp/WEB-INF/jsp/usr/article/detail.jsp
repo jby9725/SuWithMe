@@ -74,7 +74,7 @@
 	}
 function doGoodReaction(articleId) {
 	if(isNaN(params.memberId) == true){
-		if(confirm('로그인 창으로 이동하시겠습니까??')){
+		if(confirm('로그인 창으로 이동하시겠습니까?')){
 				// // console.log(window.location.href);
 				// // console.log(encodeURIComponent(window.location.href));
 			var currentUri = encodeURIComponent(window.location.href);
@@ -448,7 +448,7 @@ function doModifyReply(replyId) {
 
 					<c:if test="${empty replies}">
 						<tr>
-							<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
+							<td colspan="4" style="text-align: center;">댓글이 없습니다.</td>
 						</tr>
 					</c:if>
 				</tbody>
