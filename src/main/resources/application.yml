@@ -1,6 +1,8 @@
-server:
-  port: 8080
 spring:
+  application:
+    name: SuWithMe
+  profiles:
+    active: dev
   servlet:
     multipart:
       max-file-size: 100MB
@@ -9,15 +11,9 @@ spring:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
-  datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/SuWithMe?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-    username: root
-    password:
-  config:
-    import: optional:file:.env[.properties]
+
 mybatis:
   type-aliases-package: com.example.demo.vo
+
 custom:
   siteName: SuWithMe
-  siteMainUri: http://localhost:8080
