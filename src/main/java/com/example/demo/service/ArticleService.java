@@ -53,9 +53,6 @@ public class ArticleService {
 	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int page, String searchKeywordTypeCode,
 			String searchKeyword) {
 
-//		SELECT * FROM article WHERE boardId = 1 ORDER BY DESC LIMIT 0, 10; 1page
-//		SELECT * FROM article WHERE boardId = 1 ORDER BY DESC LIMIT 10, 10; 2page
-
 		int limitFrom = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 
@@ -100,10 +97,10 @@ public class ArticleService {
 		int affectedRow = articleRepository.increaseHitCount(id);
 
 		if (affectedRow == 0) {
-			return ResultData.from("F-1", "해당 게시글 없음", "id", id);
+			return ResultData.from("F-1", "해당 게시글이 없습니다.", "id", id);
 		}
 
-		return ResultData.from("S-1", "해당 게시글 조회수 증가", "id", id);
+		return ResultData.from("S-1", "해당 게시글의 조회수가 증가되었습니다.", "id", id);
 
 	}
 
@@ -111,40 +108,40 @@ public class ArticleService {
 		int affectedRow = articleRepository.increaseGoodReactionPoint(relId);
 
 		if (affectedRow == 0) {
-			return ResultData.from("F-1", "없는 게시물");
+			return ResultData.from("F-1", "없는 게시물입니다.");
 		}
 
-		return ResultData.from("S-1", "좋아요 증가", "affectedRow", affectedRow);
+		return ResultData.from("S-1", "좋아요가 증가되었습니다.", "affectedRow", affectedRow);
 	}
 
 	public ResultData increaseBadReactionPoint(int relId) {
 		int affectedRow = articleRepository.increaseBadReactionPoint(relId);
 
 		if (affectedRow == 0) {
-			return ResultData.from("F-1", "없는 게시물");
+			return ResultData.from("F-1", "없는 게시물입니다.");
 		}
 
-		return ResultData.from("S-1", "싫어요 증가", "affectedRow", affectedRow);
+		return ResultData.from("S-1", "싫어요가 증가되었습니다.", "affectedRow", affectedRow);
 	}
 
 	public ResultData decreaseGoodReactionPoint(int relId) {
 		int affectedRow = articleRepository.decreaseGoodReactionPoint(relId);
 
 		if (affectedRow == 0) {
-			return ResultData.from("F-1", "없는 게시물");
+			return ResultData.from("F-1", "없는 게시물입니다.");
 		}
 
-		return ResultData.from("S-1", "좋아요 감소", "affectedRow", affectedRow);
+		return ResultData.from("S-1", "좋아요가 감소되었습니다.", "affectedRow", affectedRow);
 	}
 
 	public ResultData decreaseBadReactionPoint(int relId) {
 		int affectedRow = articleRepository.decreaseBadReactionPoint(relId);
 
 		if (affectedRow == 0) {
-			return ResultData.from("F-1", "없는 게시물");
+			return ResultData.from("F-1", "없는 게시물입니다.");
 		}
 
-		return ResultData.from("S-1", "싫어요 감소", "affectedRow", affectedRow);
+		return ResultData.from("S-1", "싫어요가 감소되었습니다.", "affectedRow", affectedRow);
 	}
 
 	public Object getArticleHitCount(int id) {

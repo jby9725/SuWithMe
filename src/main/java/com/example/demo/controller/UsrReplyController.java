@@ -30,7 +30,7 @@ public class UsrReplyController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (Ut.isEmptyOrNull(body)) {
-			return Ut.jsHistoryBack("F-2", "내용을 입력해주세요");
+			return Ut.jsHistoryBack("F-2", "내용을 입력해주세요.");
 		}
 
 		ResultData writeReplyRd = replyService.writeReply(rq.getLoginedMemberId(), body, relTypeCode, relId);
@@ -50,7 +50,7 @@ public class UsrReplyController {
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
-			return Ut.jsHistoryBack("F-1", Ut.f("%d번 댓글은 존재하지 않습니다", id));
+			return Ut.jsHistoryBack("F-1", Ut.f("%d번 댓글은 존재하지 않습니다.", id));
 		}
 
 		ResultData loginedMemberCanModifyRd = replyService.userCanModify(rq.getLoginedMemberId(), reply);

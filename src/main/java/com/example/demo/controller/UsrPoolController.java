@@ -1,215 +1,209 @@
 package com.example.demo.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.demo.service.PoolService;
 import com.example.demo.util.CoordinateConverter;
 import com.example.demo.vo.Pool;
 import com.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.*;
+import java.util.List;
 
 @Controller
 public class UsrPoolController {
 
-	@Autowired
-	private PoolService poolService;
+    @Value("${NAVER_MAP_CLIENT_ID}")
+    private String NAVER_MAP_CLIENT_ID;
 
-	@RequestMapping("/usr/pool/main")
-	public String showPoolMain() {
-		return "/usr/pool/main";
-	}
+    @Value("${NAVER_MAP_CLIENT_SECRET}")
+    private String NAVER_MAP_CLIENT_SECRET;
 
-	@RequestMapping("/usr/pool/map")
-	public String showPoolMap(Model model) {
+    @Autowired
+    private PoolService poolService;
 
-		// Pool 목록을 불러옴 (예: List<Pool>에서 Pool 클래스에 latitude와 longitude가 있음)
-		List<Pool> pools = poolService.getAllPools();
-		model.addAttribute("pools", pools); // JSP로 전달할 데이터
-		
-		return "/usr/pool/map";
-	}
-	
-//	@RequestMapping("/usr/pool/search")
-//	public ResponseEntity<Pool> searchPoolByName(@RequestParam String name) {
-//        Pool pool = poolService.findByName(name);
-//        if (pool != null) {
-//            return ResponseEntity.ok(pool);
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//    }
+    @RequestMapping("/usr/pool/main")
+    public String showPoolMain() {
+        return "/usr/pool/main";
+    }
 
-	// 일회성 코드(DB에 있는 중부원점 좌표를 위도/경도로 Update 하기)
-	@RequestMapping("/usr/pool/doLatlonUpdate")
-	@ResponseBody
-	public String doLatlonUpdate() {
-		String res = "doLatlonUpdate 성공!";
+    @RequestMapping("/usr/pool/map")
+    public String showPoolMap(Model model) {
 
-		// 전체 pool의 갯수 알아오기
-		int poolsCount = poolService.getPoolsCount();
+        System.err.println("NAVER_MAP_CLIENT_ID = " + NAVER_MAP_CLIENT_ID);
+        System.err.println("NAVER_MAP_CLIENT_SECRET = " + NAVER_MAP_CLIENT_SECRET);
 
-		// pool의 갯수만큼 해당 행의
-		for (int i = 1; i <= poolsCount; i++) { //
-			// 해당 행의...
-			// 중부원점 x좌표 알아오기
-			String tmpStrLat = poolService.getX(i);
-			if (tmpStrLat == "" || tmpStrLat.isEmpty())
-				continue;
-			double tmpLat = Double.parseDouble(tmpStrLat);
-			// 중부원점 y좌표 알아오기
-			String tmpStrLon = poolService.getY(i);
-			if (tmpStrLon == "" || tmpStrLon.isEmpty())
-				continue;
-			double tmpLon = Double.parseDouble(tmpStrLon);
+        // Pool 목록을 불러옴 (예: List<Pool>에서 Pool 클래스에 latitude와 longitude가 있음)
+        List<Pool> pools = poolService.getAllPools();
+        model.addAttribute("pools", pools); // JSP로 전달할 데이터
+        model.addAttribute("NAVER_MAP_CLIENT_ID", NAVER_MAP_CLIENT_ID);
+        model.addAttribute("NAVER_MAP_CLIENT_SECRET", NAVER_MAP_CLIENT_SECRET);
 
-			// 알아온 좌표를 위도/경도로 계산하기
-			double[] result = CoordinateConverter.convertProj4j(tmpLat, tmpLon);
+        return "/usr/pool/map";
+    }
 
-			// 위도/경도 반영하기
-			poolService.setLatLon(i, result[0], result[1]);
-		}
+    // 일회성 코드(DB에 있는 중부원점 좌표를 위도/경도로 Update 하기)
+    @RequestMapping("/usr/pool/doLatlonUpdate")
+    @ResponseBody
+    public String doLatlonUpdate() {
+        String res = "doLatlonUpdate 성공!";
 
-		return res + " " + poolsCount;
-	}
+        // 전체 pool의 갯수 알아오기
+        int poolsCount = poolService.getPoolsCount();
 
-	// 일회성 코드(DB에 .csv 파일의 내용 넣기)
-	@RequestMapping("/usr/pool/doSetting")
-	@ResponseBody
-	public String doSettingDB() {
+        // pool의 갯수만큼 해당 행의
+        for (int i = 1; i <= poolsCount; i++) { //
+            // 해당 행의...
+            // 중부원점 x좌표 알아오기
+            String tmpStrLat = poolService.getX(i);
+            if (tmpStrLat == "" || tmpStrLat.isEmpty())
+                continue;
+            double tmpLat = Double.parseDouble(tmpStrLat);
+            // 중부원점 y좌표 알아오기
+            String tmpStrLon = poolService.getY(i);
+            if (tmpStrLon == "" || tmpStrLon.isEmpty())
+                continue;
+            double tmpLon = Double.parseDouble(tmpStrLon);
 
-		StringBuilder output = new StringBuilder(); // 로그 출력용 StringBuilder
-		CSVReader reader = null;
+            // 알아온 좌표를 위도/경도로 계산하기
+            double[] result = CoordinateConverter.convertProj4j(tmpLat, tmpLon);
 
-		try {
-			InputStream inputStream = getClass().getClassLoader().getResourceAsStream("selectOnlyData_PoolInfo.csv");
-			if (inputStream == null) {
-				throw new FileNotFoundException("CSV file not found in resources folder");
-			}
+            // 위도/경도 반영하기
+            poolService.setLatLon(i, result[0], result[1]);
+        }
 
-			reader = new CSVReader(new InputStreamReader(inputStream, "UTF-8"));
-			String[] nextLine;
+        return res + " " + poolsCount;
+    }
 
-			// CSV 파일에서 한 줄씩 읽어오기
-			while ((nextLine = reader.readNext()) != null) {
+    // 일회성 코드(DB에 .csv 파일의 내용 넣기)
+    @RequestMapping("/usr/pool/doSetting")
+    @ResponseBody
+    public String doSettingDB() {
 
-				String id = nextLine[0]; // 번호
+        StringBuilder output = new StringBuilder(); // 로그 출력용 StringBuilder
+        CSVReader reader = null;
 
-				String statusCode = nextLine[1]; // 영업상태구분코드
-				String statusName = nextLine[2]; // 영업상태명
-				String detailStatusCode = nextLine[3]; // 상세영업상태코드
-				String detailStatusName = nextLine[4]; // 상세영업상태명
+        try {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("selectOnlyData_PoolInfo.csv");
+            if (inputStream == null) {
+                throw new FileNotFoundException("CSV file not found in resources folder");
+            }
 
-				String suspensionStartDate = nextLine[5]; // 휴업시작일자
-				String suspensionEndDate = nextLine[6]; // 휴업종료일자
+            reader = new CSVReader(new InputStreamReader(inputStream, "UTF-8"));
+            String[] nextLine;
 
-				suspensionStartDate = (suspensionStartDate.isEmpty()) ? null : suspensionStartDate;
-				suspensionEndDate = (suspensionEndDate.isEmpty()) ? null : suspensionEndDate;
+            // CSV 파일에서 한 줄씩 읽어오기
+            while ((nextLine = reader.readNext()) != null) {
 
-				String callNumber = nextLine[7]; // 소재지전화
-				String postalCodeLocation = nextLine[8]; // 소재지우편번호
-				String addressLocation = nextLine[9]; // 소재지전체주소
-				String addressStreet = nextLine[10];// 도로명전체주소
-				String postalCodeStreet = nextLine[11]; // 도로명우편번호
+                String id = nextLine[0]; // 번호
 
-				String name = nextLine[12];// 사업장명
+                String statusCode = nextLine[1]; // 영업상태구분코드
+                String statusName = nextLine[2]; // 영업상태명
+                String detailStatusCode = nextLine[3]; // 상세영업상태코드
+                String detailStatusName = nextLine[4]; // 상세영업상태명
 
-				String latitude = nextLine[13]; // 좌표정보(x)
-				String longitude = nextLine[14]; // 좌표정보(y)
+                String suspensionStartDate = nextLine[5]; // 휴업시작일자
+                String suspensionEndDate = nextLine[6]; // 휴업종료일자
 
-				System.err.println(id);
-				int temp = Integer.parseInt(id);
+                suspensionStartDate = (suspensionStartDate.isEmpty()) ? null : suspensionStartDate;
+                suspensionEndDate = (suspensionEndDate.isEmpty()) ? null : suspensionEndDate;
 
-				poolService.doInsertPoolInfo(temp, statusCode, statusName, detailStatusCode, detailStatusName,
-						suspensionStartDate, suspensionEndDate, callNumber, postalCodeLocation, addressLocation,
-						addressStreet, postalCodeStreet, name, latitude, longitude);
+                String callNumber = nextLine[7]; // 소재지전화
+                String postalCodeLocation = nextLine[8]; // 소재지우편번호
+                String addressLocation = nextLine[9]; // 소재지전체주소
+                String addressStreet = nextLine[10];// 도로명전체주소
+                String postalCodeStreet = nextLine[11]; // 도로명우편번호
 
-				output.append("Inserted: ").append(id).append(", ").append(statusCode).append(", ").append(statusName)
-						.append(", ").append(detailStatusCode).append(", ").append(detailStatusName).append(", ")
-						.append(suspensionStartDate).append(", ").append(suspensionEndDate).append(", ")
-						.append(callNumber).append(", ").append(postalCodeLocation).append(", ")
-						.append(postalCodeStreet).append(", ").append(addressLocation).append(", ")
-						.append(addressStreet).append(", ").append(name).append(", ").append(latitude).append(", ")
-						.append(longitude).append("<hr>");
+                String name = nextLine[12];// 사업장명
 
-			}
+                String latitude = nextLine[13]; // 좌표정보(x)
+                String longitude = nextLine[14]; // 좌표정보(y)
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Error occurred: " + e.getMessage();
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close(); // 리소스 해제
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+                System.err.println(id);
+                int temp = Integer.parseInt(id);
 
-		return "CSV to DB Insert 성공! <hr>" + output.toString();
-	}
+                poolService.doInsertPoolInfo(temp, statusCode, statusName, detailStatusCode, detailStatusName,
+                        suspensionStartDate, suspensionEndDate, callNumber, postalCodeLocation, addressLocation,
+                        addressStreet, postalCodeStreet, name, latitude, longitude);
 
-	// 테스트용 코드
-	@RequestMapping("/usr/pool/showCSVData")
-	@ResponseBody
-	public String showData() {
+                output.append("Inserted: ").append(id).append(", ").append(statusCode).append(", ").append(statusName)
+                        .append(", ").append(detailStatusCode).append(", ").append(detailStatusName).append(", ")
+                        .append(suspensionStartDate).append(", ").append(suspensionEndDate).append(", ")
+                        .append(callNumber).append(", ").append(postalCodeLocation).append(", ")
+                        .append(postalCodeStreet).append(", ").append(addressLocation).append(", ")
+                        .append(addressStreet).append(", ").append(name).append(", ").append(latitude).append(", ")
+                        .append(longitude).append("<hr>");
 
-		StringBuilder output = new StringBuilder(); // CSV 파일 내용을 담을 StringBuilder
-		CSVReader reader = null;
+            }
 
-		try {
-			// 리소스 폴더에서 CSV 파일 읽기
-			InputStream inputStream = getClass().getClassLoader().getResourceAsStream("selectOnlyData_PoolInfo.csv");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error occurred: " + e.getMessage();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close(); // 리소스 해제
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-			if (inputStream == null) {
-				throw new FileNotFoundException("CSV file not found in resources folder");
-			}
+        return "CSV to DB Insert 성공! <hr>" + output.toString();
+    }
 
-			// InputStreamReader에 UTF-8 인코딩을 명시적으로 지정
-			reader = new CSVReader(new InputStreamReader(inputStream, "UTF-8"));
-			String[] nextLine;
+    // 테스트용 코드
+    @RequestMapping("/usr/pool/showCSVData")
+    @ResponseBody
+    public String showData() {
 
-			// CSV 파일에서 한 줄씩 읽어와 StringBuilder에 추가
-			while ((nextLine = reader.readNext()) != null) {
-				for (String token : nextLine) {
-					output.append(token).append(" "); // 각 CSV 값을 공백으로 구분하여 추가
-				}
-				output.append("<br>"); // 줄 바꿈 추가 (HTML)
-			}
+        StringBuilder output = new StringBuilder(); // CSV 파일 내용을 담을 StringBuilder
+        CSVReader reader = null;
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Error occurred: " + e.getMessage();
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close(); // 리소스 해제
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+        try {
+            // 리소스 폴더에서 CSV 파일 읽기
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("selectOnlyData_PoolInfo.csv");
 
-		return "showCSVData 성공! <hr>" + output.toString(); // CSV 파일 내용 출력
-	}
+            if (inputStream == null) {
+                throw new FileNotFoundException("CSV file not found in resources folder");
+            }
 
-	public static List<String[]> readCSV(String filePath) throws Exception {
-		CSVReader reader = new CSVReader(new FileReader(filePath));
-		List<String[]> data = reader.readAll();
-		reader.close();
-		return data;
-	}
+            // InputStreamReader에 UTF-8 인코딩을 명시적으로 지정
+            reader = new CSVReader(new InputStreamReader(inputStream, "UTF-8"));
+            String[] nextLine;
+
+            // CSV 파일에서 한 줄씩 읽어와 StringBuilder에 추가
+            while ((nextLine = reader.readNext()) != null) {
+                for (String token : nextLine) {
+                    output.append(token).append(" "); // 각 CSV 값을 공백으로 구분하여 추가
+                }
+                output.append("<br>"); // 줄 바꿈 추가 (HTML)
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error occurred: " + e.getMessage();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close(); // 리소스 해제
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "showCSVData 성공! <hr>" + output.toString(); // CSV 파일 내용 출력
+    }
+
+    public static List<String[]> readCSV(String filePath) throws Exception {
+        CSVReader reader = new CSVReader(new FileReader(filePath));
+        List<String[]> data = reader.readAll();
+        reader.close();
+        return data;
+    }
 }

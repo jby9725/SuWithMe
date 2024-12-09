@@ -13,7 +13,9 @@ spring:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/SuWithMe?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
     username: root
-    password: 
+    password:
+  config:
+    import: optional:file:.env[.properties]
 mybatis:
   type-aliases-package: com.example.demo.vo
 custom:

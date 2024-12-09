@@ -45,22 +45,22 @@ public class UsrMemberController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (Ut.isEmptyOrNull(loginId)) {
-			return Ut.jsHistoryBack("F-1", "loginId 입력 x");
+			return Ut.jsHistoryBack("F-1", "loginId를 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(loginPw)) {
-			return Ut.jsHistoryBack("F-2", "loginPw 입력 x");
+			return Ut.jsHistoryBack("F-2", "loginPw를 입력하지 않았습니다.");
 		}
 
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
-			return Ut.jsHistoryBack("F-3", Ut.f("%s는(은) 존재 x", loginId));
+			return Ut.jsHistoryBack("F-3", Ut.f("%s는(은) 존재하지 않습니다.", loginId));
 		}
 
 		System.err.println(Ut.sha256(loginPw));
 
 		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
-			return Ut.jsHistoryBack("F-4", Ut.f("비밀번호가 일치하지 않습니다!!!!!"));
+			return Ut.jsHistoryBack("F-4", Ut.f("비밀번호가 일치하지 않습니다."));
 		}
 
 		if (member.isDelStatus() == true) {
@@ -88,22 +88,22 @@ public class UsrMemberController {
 			String cellphoneNum, String email) {
 
 		if (Ut.isEmptyOrNull(loginId)) {
-			return Ut.jsHistoryBack("F-1", "loginId 입력 x");
+			return Ut.jsHistoryBack("F-1", "loginId를 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(loginPw)) {
-			return Ut.jsHistoryBack("F-2", "loginPw 입력 x");
+			return Ut.jsHistoryBack("F-2", "loginPw를 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(name)) {
-			return Ut.jsHistoryBack("F-3", "name 입력 x");
+			return Ut.jsHistoryBack("F-3", "name을 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(nickname)) {
-			return Ut.jsHistoryBack("F-4", "nickname 입력 x");
+			return Ut.jsHistoryBack("F-4", "nickname을 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(cellphoneNum)) {
-			return Ut.jsHistoryBack("F-5", "cellphoneNum 입력 x");
+			return Ut.jsHistoryBack("F-5", "cellphoneNum을 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(email)) {
-			return Ut.jsHistoryBack("F-6", "email 입력 x");
+			return Ut.jsHistoryBack("F-6", "email을 입력하지 않았습니다.");
 		}
 
 		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
@@ -132,11 +132,11 @@ public class UsrMemberController {
 	public String doCheckPw(String loginPw) {
 
 		if (Ut.isEmptyOrNull(loginPw)) {
-			return Ut.jsHistoryBack("F-1", "비번 써");
+			return Ut.jsHistoryBack("F-1", "비번을 입력해주세요.");
 		}
 
 		if (rq.getLoginedMember().getLoginPw().equals(Ut.sha256(loginPw)) == false) {
-			return Ut.jsHistoryBack("F-2", "비번 틀림");
+			return Ut.jsHistoryBack("F-2", "비번이 틀립니다.");
 		}
 
 		return Ut.jsReplace("S-1", Ut.f("비밀번호 확인 성공"), "modify");
@@ -157,16 +157,16 @@ public class UsrMemberController {
 		// 비번은 안바꾸는거 가능(사용자) 비번 null 체크는 x
 
 		if (Ut.isEmptyOrNull(name)) {
-			return Ut.jsHistoryBack("F-3", "name 입력 x");
+			return Ut.jsHistoryBack("F-3", "name을 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(nickname)) {
-			return Ut.jsHistoryBack("F-4", "nickname 입력 x");
+			return Ut.jsHistoryBack("F-4", "nickname을 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(cellphoneNum)) {
-			return Ut.jsHistoryBack("F-5", "cellphoneNum 입력 x");
+			return Ut.jsHistoryBack("F-5", "cellphoneNum을 입력하지 않았습니다.");
 		}
 		if (Ut.isEmptyOrNull(email)) {
-			return Ut.jsHistoryBack("F-6", "email 입력 x");
+			return Ut.jsHistoryBack("F-6", "email을 입력하지 않았습니다.");
 		}
 
 		ResultData modifyRd;
@@ -191,7 +191,7 @@ public class UsrMemberController {
 		Member existsMember = memberService.getMemberByLoginId(loginId);
 
 		if (existsMember != null) {
-			return ResultData.from("F-2", "해당 아이디는 이미 사용중이야", "loginId", loginId);
+			return ResultData.from("F-2", "해당 아이디는 이미 사용중입니다.", "loginId", loginId);
 		}
 
 		return ResultData.from("S-1", "사용 가능!", "loginId", loginId);
@@ -247,11 +247,11 @@ public class UsrMemberController {
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
-			return Ut.jsHistoryBack("F-1", "너는 없는 사람이야");
+			return Ut.jsHistoryBack("F-1", "가입되어있지 않은 회원입니다.");
 		}
 
 		if (member.getEmail().equals(email) == false) {
-			return Ut.jsHistoryBack("F-2", "일치하는 이메일이 없는데?");
+			return Ut.jsHistoryBack("F-2", "일치하는 이메일이 없습니다.");
 		}
 
 		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);

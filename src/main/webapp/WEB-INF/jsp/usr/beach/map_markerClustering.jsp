@@ -17,7 +17,7 @@
 
     // 지도 초기화 및 마커 설정
     document.addEventListener('DOMContentLoaded', function() { // 페이지 로드 후에 초기화
-        console.log("DOMContentLoaded 이벤트가 실행되었습니다.");
+        // console.log("DOMContentLoaded 이벤트가 실행되었습니다.");
 
         map = new naver.maps.Map('map', { // map을 전역 변수로 할당
             center: new naver.maps.LatLng(36.3504396, 127.3849508), // 대전 시청 좌표
@@ -38,7 +38,7 @@
         </c:forEach>
 
         // 확인용: 전달된 beaches 데이터 확인
-        console.log("Beaches 데이터:", beaches);
+        // console.log("Beaches 데이터:", beaches);
 
         
         var markers = [];
@@ -104,12 +104,12 @@
             
             // 마커 클릭 시 날씨 정보 요청
             naver.maps.Event.addListener(marker, 'click', function(e) {
-                console.log("Clicked beach:", beach); // 클릭한 마커의 데이터 확인
+                // console.log("Clicked beach:", beach); // 클릭한 마커의 데이터 확인
 
                 var nx = beach.nx;
                 var ny = beach.ny;
 
-                console.log("nx:", nx, "ny:", ny);
+                // console.log("nx:", nx, "ny:", ny);
 
                 if (!nx || !ny) {
                     alert("해당 해수욕장의 좌표 정보가 없습니다. nx, ny 값이 비어 있습니다.");
@@ -124,8 +124,8 @@
 
     // 날씨 데이터 요청 및 모달 창 표시 함수
     function getWeatherData(nx, ny, beachName) {
-        console.log("getWeatherData nx : ", nx);
-        console.log("getWeatherData ny : ", ny);
+        // console.log("getWeatherData nx : ", nx);
+        // console.log("getWeatherData ny : ", ny);
 
         if (!nx || !ny) {
             console.error("nx 또는 ny 값이 비어 있습니다:", nx, ny);
@@ -134,12 +134,12 @@
         }
 
         const requestUrl = `/usr/beach/weather?nx=\${nx}&ny=\${ny}&numOfRows=10`;
-        console.log("요청 URL:", requestUrl);
+        // console.log("요청 URL:", requestUrl);
 
         fetch(requestUrl)
         .then(response => response.json())
         .then(data => {
-            console.log("Weather Data 서버 응답 데이터:", data);
+            // console.log("Weather Data 서버 응답 데이터:", data);
 
             if (Object.keys(data).length === 0) {
                 alert("날씨 정보를 가져오는 데 실패했습니다.");
@@ -156,7 +156,7 @@
 
     // 날씨 정보를 팝업에 표시하는 함수
     function showWeatherPopup(beachName, weatherDataMap) {
-        console.log("받아온 데이터 확인: ", weatherDataMap);
+        // console.log("받아온 데이터 확인: ", weatherDataMap);
 
         // 여러 시간대의 날씨 정보를 표시하기 위한 코드
         let popupContent = `<div>
@@ -206,7 +206,7 @@
 
         // 해수욕장 검색
         const searchUrl = `/usr/beach/search?name=\${encodeURIComponent(searchInput)}`;
-        console.log("검색 요청 URL:", searchUrl);
+        // console.log("검색 요청 URL:", searchUrl);
 
         fetch(searchUrl)
             .then(response => response.json())
@@ -217,7 +217,7 @@
                 }
 
                 // 검색된 해수욕장 정보 확인
-                console.log("검색된 해수욕장 데이터:", beach);
+                // console.log("검색된 해수욕장 데이터:", beach);
 
                 // 지도의 중심을 검색된 해수욕장 위치로 이동
                 const newCenter = new naver.maps.LatLng(beach.latitude, beach.longitude);

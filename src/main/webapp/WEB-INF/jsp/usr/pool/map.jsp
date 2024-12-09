@@ -7,15 +7,9 @@
 <%@ include file="../common/sidebar.jspf"%>
 
 <!-- 네이버 지도 API -->
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ecu9lnpu4v"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${NAVER_MAP_CLIENT_ID}"></script>
 <!-- 네이버 마커클러스터링 API -->
 <script type="text/javascript" src="/js/MarkerClustering.js"></script>
-
-<!-- 네이버 검색 API 키 설정 -->
-<script>
-    var CLIENT_ID = 'tZ8PAfL1CjFknwH_rWcD'; // 발급받은 Client ID
-    var CLIENT_SECRET = 'DXtbtb6Jpo'; // 발급받은 Client Secret
-</script>
 
 <!-- 배경 -->
 <div id="background" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
@@ -78,7 +72,7 @@
     });
     </c:forEach>
 
-    console.log("Pools 데이터: ", pools);
+    // // console.log("Pools 데이터: ", pools);
 
     // 모달을 열어 수영장 정보를 표시하는 함수
     function openModal(poolName, callNumber, postalCodeStreet, addressLocation, imageSrcArray) {
@@ -129,7 +123,7 @@
                     }
                     callback(imageSrcArray);
                 } else {
-                    console.log("이미지가 없습니다.");
+                    // console.log("이미지가 없습니다.");
                     callback([null, null, null]);  // 이미지가 없을 경우 기본 이미지로 대체
                 }
             })

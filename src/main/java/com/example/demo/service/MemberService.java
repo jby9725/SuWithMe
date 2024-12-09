@@ -66,7 +66,7 @@ public class MemberService {
 
 		int id = memberRepository.getLastInsertId();
 
-		return ResultData.from("S-1", "회원가입 성공", "생성된 회원 id", id);
+		return ResultData.from("S-1", "회원가입에 성공하였습니다.", "생성된 회원 id", id);
 	}
 
 	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword) {
@@ -121,14 +121,14 @@ public class MemberService {
 
 		memberRepository.modify(loginedMemberId, loginPw, name, nickname, cellphoneNum, email);
 
-		return ResultData.from("S-1", "회원정보 수정 완료");
+		return ResultData.from("S-1", "회원정보 수정을 완료하였습니다.");
 	}
 
 	public ResultData modifyWithoutPw(int loginedMemberId, String name, String nickname, String cellphoneNum,
 			String email) {
 		memberRepository.modifyWithoutPw(loginedMemberId, name, nickname, cellphoneNum, email);
 
-		return ResultData.from("S-1", "회원정보 수정 완료");
+		return ResultData.from("S-1", "회원정보 수정을 완료하였습니다.");
 	}
 
 	public void updatePassword(int memberId, String encodedPassword) {

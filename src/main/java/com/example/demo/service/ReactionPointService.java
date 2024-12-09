@@ -22,17 +22,17 @@ public class ReactionPointService {
 	public ResultData usersReaction(int loginedMemberId, String relTypeCode, int relId) {
 
 		if (loginedMemberId == 0) {
-			return ResultData.from("F-L", "로그인 하고 써야해");
+			return ResultData.from("F-L", "로그인 해야합니다.");
 		}
 
 		int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPoint(loginedMemberId, relTypeCode,
 				relId);
 
 		if (sumReactionPointByMemberId != 0) {
-			return ResultData.from("F-1", "추천 불가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
+			return ResultData.from("F-1", "추천이 불가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 		}
 
-		return ResultData.from("S-1", "추천 가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
+		return ResultData.from("S-1", "추천이 가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 
 	public ResultData addGoodReactionPoint(int loginedMemberId, String relTypeCode, int relId) {
@@ -40,7 +40,7 @@ public class ReactionPointService {
 		int affectedRow = reactionPointRepository.addGoodReactionPoint(loginedMemberId, relTypeCode, relId);
 
 		if (affectedRow != 1) {
-			return ResultData.from("F-1", "좋아요 실패");
+			return ResultData.from("F-1", "좋아요가 실패하였습니다.");
 		}
 
 		switch (relTypeCode) {
@@ -49,14 +49,14 @@ public class ReactionPointService {
 			break;
 		}
 
-		return ResultData.from("S-1", "좋아요!");
+		return ResultData.from("S-1", "좋아요가 등록되었습니다.");
 	}
 
 	public ResultData addBadReactionPoint(int loginedMemberId, String relTypeCode, int relId) {
 		int affectedRow = reactionPointRepository.addBadReactionPoint(loginedMemberId, relTypeCode, relId);
 
 		if (affectedRow != 1) {
-			return ResultData.from("F-1", "싫어요 실패");
+			return ResultData.from("F-1", "싫어요가 실패하였습니다.");
 		}
 
 		switch (relTypeCode) {
@@ -65,7 +65,7 @@ public class ReactionPointService {
 			break;
 		}
 
-		return ResultData.from("S-1", "싫어요!");
+		return ResultData.from("S-1", "싫어요가 등록되었습니다.");
 	}
 
 	public ResultData deleteGoodReactionPoint(int loginedMemberId, String relTypeCode, int relId) {
@@ -76,7 +76,7 @@ public class ReactionPointService {
 			articleService.decreaseGoodReactionPoint(relId);
 			break;
 		}
-		return ResultData.from("S-1", "좋아요 취소 됨");
+		return ResultData.from("S-1", "좋아요가 취소되었습니다.");
 
 	}
 
@@ -88,7 +88,7 @@ public class ReactionPointService {
 			articleService.decreaseBadReactionPoint(relId);
 			break;
 		}
-		return ResultData.from("S-1", "싫어요 취소 됨");
+		return ResultData.from("S-1", "싫어요가 취소되었습니다.");
 	}
 
 	public boolean isAlreadyAddGoodRp(int memberId, int relId, String relTypeCode) {

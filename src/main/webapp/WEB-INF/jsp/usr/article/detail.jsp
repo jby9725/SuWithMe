@@ -14,9 +14,9 @@
 	
 	params.memberId = parseInt('${loginedMemberId}')
 	
-	console.log(params);
-	console.log(params.id);
-	console.log(params.memberId);
+	// // console.log(params);
+	// // console.log(params.id);
+	// // console.log(params.memberId);
 	
 // 	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp ? 'true' : 'false'};
 //  var isAlreadyAddBadRp = ${isAlreadyAddBadRp ? 'true' : 'false'};
@@ -49,8 +49,8 @@
 			id : params.id,
 			ajaxMode : 'Y'
 		}, function(data) {
-			console.log(data);
-			console.log(data.data1);
+			// // console.log(data);
+			// // console.log(data.data1);
 			$('.article-detail__hit-count').empty().html(data.data1);
 		}, 'json')
 	}
@@ -75,8 +75,8 @@
 function doGoodReaction(articleId) {
 	if(isNaN(params.memberId) == true){
 		if(confirm('로그인 창으로 이동하시겠습니까??')){
-				console.log(window.location.href);
-				console.log(encodeURIComponent(window.location.href));
+				// // console.log(window.location.href);
+				// // console.log(encodeURIComponent(window.location.href));
 			var currentUri = encodeURIComponent(window.location.href);
 			window.location.href = '../member/login?afterLoginUri=' + currentUri;
 		}
@@ -89,11 +89,11 @@ function doGoodReaction(articleId) {
 			data: {relTypeCode: 'article', relId: articleId},
 			dataType: 'json',
 			success: function(data){
-				console.log(data);
-				console.log('data.data1Name : ' + data.data1Name);
-				console.log('data.data1 : ' + data.data1);
-				console.log('data.data2Name : ' + data.data2Name);
-				console.log('data.data2 : ' + data.data2);
+				// // console.log(data);
+				// // console.log('data.data1Name : ' + data.data1Name);
+				// // console.log('data.data1 : ' + data.data1);
+				// // console.log('data.data2Name : ' + data.data2Name);
+				// // console.log('data.data2 : ' + data.data2);
 				if(data.resultCode.startsWith('S-')){
 					var likeButton = $('#likeButton');
 					var likeCount = $('#likeCount');
@@ -134,8 +134,8 @@ function doBadReaction(articleId) {
 	
 	if(isNaN(params.memberId) == true){
 		if(confirm('로그인 창으로 이동하시겠습니까?')){
-				console.log(window.location.href);
-				console.log(encodeURIComponent(window.location.href));
+				// // console.log(window.location.href);
+				// // console.log(encodeURIComponent(window.location.href));
 			var currentUri = encodeURIComponent(window.location.href);
 			window.location.href = '../member/login?afterLoginUri=' + currentUri;
 			// 로그인 페이지에 원래 페이지의 정보를 포함시켜서 보냄
@@ -149,11 +149,11 @@ function doBadReaction(articleId) {
 			data: {relTypeCode: 'article', relId: articleId},
 			dataType: 'json',
 			success: function(data){
-				console.log(data);
-				console.log('data.data1Name : ' + data.data1Name);
-				console.log('data.data1 : ' + data.data1);
-				console.log('data.data2Name : ' + data.data2Name);
-				console.log('data.data2 : ' + data.data2);
+				// console.log(data);
+				// console.log('data.data1Name : ' + data.data1Name);
+				// console.log('data.data1 : ' + data.data1);
+				// console.log('data.data2Name : ' + data.data2Name);
+				// console.log('data.data2 : ' + data.data2);
 				if(data.resultCode.startsWith('S-')){
 					var likeButton = $('#likeButton');
 					var likeCount = $('#likeCount');
@@ -199,7 +199,7 @@ function doBadReaction(articleId) {
 
 <script>
 	function ReplyWrite__submit(form) {
-		console.log(form.body.value);
+		// console.log(form.body.value);
 		
 		form.body.value = form.body.value.trim();
 		
@@ -217,7 +217,7 @@ function doBadReaction(articleId) {
 <script>
 function toggleModifybtn(replyId) {
 	
-	console.log(replyId);
+	// console.log(replyId);
 	
 	$('#modify-btn-'+replyId).hide();
 	$('#save-btn-'+replyId).show();
@@ -225,17 +225,17 @@ function toggleModifybtn(replyId) {
 	$('#modify-form-'+replyId).show();
 }
 function doModifyReply(replyId) {
-	 console.log(replyId); // 디버깅을 위해 replyId를 콘솔에 출력
+	 // console.log(replyId); // 디버깅을 위해 replyId를 콘솔에 출력
 	    
 	    // form 요소를 정확하게 선택
 	    var form = $('#modify-form-' + replyId);
-	    console.log(form); // 디버깅을 위해 form을 콘솔에 출력
+	    // console.log(form); // 디버깅을 위해 form을 콘솔에 출력
 	    // form 내의 input 요소의 값을 가져옵니다
 	    var text = form.find('input[name="reply-text-' + replyId + '"]').val();
-	    console.log(text); // 디버깅을 위해 text를 콘솔에 출력
+	    // console.log(text); // 디버깅을 위해 text를 콘솔에 출력
 	    // form의 action 속성 값을 가져옵니다
 	    var action = form.attr('action');
-	    console.log(action); // 디버깅을 위해 action을 콘솔에 출력
+	    // console.log(action); // 디버깅을 위해 action을 콘솔에 출력
 	
     $.post({
     	url: '/usr/reply/doModify', // 수정된 URL

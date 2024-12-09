@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -11,8 +12,12 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class UsrProxyController {
-	private final String CLIENT_ID = "tZ8PAfL1CjFknwH_rWcD"; // 발급받은 Client ID
-	private final String CLIENT_SECRET = "DXtbtb6Jpo"; // 발급받은 Client Secret
+
+	@Value("${NAVER_SEARCH_CLIENT_ID}")
+	private String CLIENT_ID;
+
+	@Value("${NAVER_SEARCH_CLIENT_SECRET}")
+	private String CLIENT_SECRET;
 
 	// 이미지 검색 API 프록시
 	@GetMapping("/proxy/search/image")

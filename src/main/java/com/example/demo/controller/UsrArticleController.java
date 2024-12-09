@@ -63,7 +63,7 @@ public class UsrArticleController {
 		Board board = boardService.getBoardById(boardId);
 
 		if (board == null) {
-			return rq.historyBackOnView("없는 게시판임");
+			return rq.historyBackOnView("없는 게시판입니다.");
 		}
 
 		int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);

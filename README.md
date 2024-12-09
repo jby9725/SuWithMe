@@ -61,7 +61,6 @@ DB : MySQL
 
 ### 네이버 지도 API 키 발급
 수영장과 해수욕장의 지도를 표시하기 위해 네이버 지도 API를 사용하였기 때문에, 서비스를 제대로 제공하기 위해서는 네이버 지도 API 키가 필요하다.
-네이버 지도 API 키를 발급받을 때 사진과 같은 서비스를 신청해야 한다.
 usr/pool/map.jsp 파일 안의 내용을 교체해야 한다.
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?YOUR_API_KEY"></script>
 	- YOUR_API_KEY를 발급받은 본인의 API 키로 교체한다.

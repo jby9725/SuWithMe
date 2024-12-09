@@ -73,7 +73,7 @@
     });
     </c:forEach>
 
-    console.log("Pools 데이터: ", pools);
+    // console.log("Pools 데이터: ", pools);
 
     // 모달을 열어 수영장 정보를 표시하는 함수
     function openModal(poolName, callNumber, postalCodeStreet, addressLocation, imageSrcArray) {
@@ -124,7 +124,7 @@
                     }
                     callback(imageSrcArray);
                 } else {
-                    console.log("이미지가 없습니다.");
+                    // console.log("이미지가 없습니다.");
                     callback([null, null, null]);  // 이미지가 없을 경우 기본 이미지로 대체
                 }
             })
