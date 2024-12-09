@@ -61,24 +61,30 @@ DB : MySQL
 
 ### 네이버 지도 API 키 발급
 수영장과 해수욕장의 지도를 표시하기 위해 네이버 지도 API를 사용하였기 때문에, 서비스를 제대로 제공하기 위해서는 네이버 지도 API 키가 필요하다.
-usr/pool/map.jsp 파일 안의 내용을 교체해야 한다.
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?YOUR_API_KEY"></script>
-	- YOUR_API_KEY를 발급받은 본인의 API 키로 교체한다.
-
-usr/beach/map.jsp 파일 안의 내용을 교체해야 한다.
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?YOUR_API_KEY"></script>
-	- YOUR_API_KEY를 발급받은 본인의 API 키로 교체한다.
+.env 파일을 루트 디렉토리에 만들고, 다음과 같이 작성해야 한다.
+```
+NAVER_MAP_CLIENT_ID=새로 발급받은 클라이언트 키
+NAVER_MAP_CLIENT_SECRET=새로 발급받은 시크릿 키
+```
 
 ### 네이버 검색 API 키 발급
 수영장 지도 기능 중에 수영장의 이미지를 검색하여 가져오는 API를 사용하였다. 마찬가지로 API키가 필요하다.
 https://developers.naver.com/docs/serviceapi/search/image/image.md
-에 접속하여 절차대로 진행한다.
-UsrProxyController.java에서 CLIENT_ID의 값과 CLIENT_SECRET의 값을 발급받은 본인의 API 키로 교체한다.
+에 접속하여 안내하는 절차대로 진행한다. 검색 API가 필요하다.
+
+.env 파일에 마찬가지로 다음과 같은 내용을 추가해야 한다.
+```
+NAVER_SEARCH_CLIENT_ID=새로 발급받은 클라이언트 키
+NAVER_SEARCH_CLIENT_SECRET=새로 발급받은 시크릿 키
+```
 
 ### 공공데이터 API 키 발급
 해수욕장의 날씨를 표시하는데에 공공데이터 기상청 API를 사용하였기 때문에 해당 API키가 필요하다.
 공공데이터 사이트에 접속하여 ‘기상청_단기예보 ((구)_동네예보) 조회서비스’의 활용신청을 하면 된다.
-UsrBeachController.java에서 serviceKey 변수의 값을 자신이 발급받은 API 키로 교체한다.
+.env 파일에 마찬가지로 다음과 같은 내용을 추가해야 한다.
+```
+OPEN_DATA_WEATHER_API_KEY=새로 발급받은 공공데이터 API 키
+```
 
 
 
