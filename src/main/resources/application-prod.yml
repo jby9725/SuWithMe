@@ -12,7 +12,7 @@ spring:
     import: optional:file:.env[.properties]
 
 custom:
-  siteMainUri: https://www.suwithme.com
+  siteMainUri: https://http://www.suwithme.jby9725.site/
 logging:
   level:
     root: ERROR # 운영 환경은 에러 수준 로깅
